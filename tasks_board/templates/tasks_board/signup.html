@@ -1,0 +1,36 @@
+{% extends 'tasks_board/base.html' %}
+
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'tasks_board/css/auth.css' %}">
+{% endblock %}
+
+{% block title %} Sign up {% endblock %}
+
+{% block body %}
+    <div class="container body_block py-5">
+        <div class="signup_container text-center font-weight-bold border border-info rounded py-5">
+            <form class="mx-auto signup_form" method="post" action="{% url 'board:sign_up' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        <input class="form-control" name="{{ field.html_name }}" type="{{ field.widget_type }}"/>
+                    </div>
+                    {% if field.errors %}
+                        <div class="text-center text-danger">
+                            <ul>
+                                {% for error in field.errors %}
+                                    <li>
+                                    {{ error }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <input class="btn btn-outline-success" type="submit" value="Sign up">
+            </form>
+        </div>
+    </div>
+{% endblock %}

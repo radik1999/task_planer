@@ -1,0 +1,16 @@
+{% extends 'tasks_board/base.html' %}
+
+{% block title %}
+    All Tasks
+{% endblock %}
+
+
+{% block tasks_link_class %}active{% endblock %}
+{% block body %}
+    <div class="p-5 text-center">
+        {% include 'tasks_board/add_task.html' %}
+        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
+            Add Task
+        </button>
+    </div>
+{% endblock %}
