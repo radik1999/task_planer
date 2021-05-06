@@ -1,4 +1,5 @@
 {% extends 'tasks_board/base.html' %}
+{% load static %}
 
 {% block title %}
     All Tasks
@@ -8,9 +9,17 @@
 {% block tasks_link_class %}active{% endblock %}
 {% block body %}
     <div class="p-5 text-center">
+        {% for task in tasks %}
+            <h5>{{ task.title }}</h5>
+            <h5>{{ task.date }}</h5>
+            <h5>{{ task.priority }}</h5>
+            <h5>{{ task.goal }}</h5>
+            <h5>{{ task.status }}</h5>
+        {% endfor %}
         {% include 'tasks_board/add_task.html' %}
         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
             Add Task
         </button>
     </div>
+
 {% endblock %}

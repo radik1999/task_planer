@@ -6,10 +6,33 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from .models import Goal, DailyTask
+
 
 def all_tasks(request):
-    return render(request, 'tasks_board/all_tasks.html')
+    tasks = DailyTask.objects.all()
+    goals = Goal.objects.all()
+    return render(request, 'tasks_board/all_tasks.html', {'tasks': tasks, 'goals': goals})
 
+
+def add_task(request):
+    if request.method == 'POST':
+        task = DailyTask()
+        task.title = request.POST.get('title')
+        date = request.POST.get('date')
+        if date:
+            task.date = date
+        goal = request.POST.get('goal')
+        if goal:
+            task.goal = goal
+        priority = request.POST.get('priority')
+        if priority:
+            task.priority = priority
+        status = request.POST.get('status')
+        task.status = True if status == 'true' else False
+        task.owner = request.user
+        task.save()
+        return HttpResponse('OK')
 
 def current_day(request):
     return render(request, 'tasks_board/today.html')

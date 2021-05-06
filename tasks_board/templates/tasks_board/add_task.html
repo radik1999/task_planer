@@ -1,18 +1,20 @@
+{% load static %}
+{% csrf_token %}
 <div class="modal" id="add_task">
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
-            <form action="#" method="post">
-            {% csrf_token %}
-
             <div class="modal-header">
+
                 <div class="form-group">
                     <div class="form-check">
                         <div class="form-check-label font-weight-bold">
-                            <input type="checkbox" class="form-check-input " name="status">Done
+                            <input type="checkbox" class="form-check-input " id="status" name="status">Done
                         </div>
                     </div>
                 </div>
+
                 <button class="close" data-dismiss="modal">&times;</button>
+
             </div>
 
             <div class="modal-body">
@@ -21,7 +23,7 @@
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Title </span>
                         </div>
-                        <input type="text" class="form-control" name="title" placeholder="Task">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Task">
                     </div>
                 </div>
 
@@ -35,25 +37,29 @@
                 </div>
 
                 <div class="form-group">
-{#                        <label for="priority">Priority:</label>#}
                     <select class="custom-select" name="priority" id="priority">
-                        <option selected>Priority</option>
+                        <option selected value="">Priority</option>
                         <option value=0>Low</option>
                         <option value=1>Normal</option>
                         <option value=2>High</option>
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <select class="custom-select" name="goal" id="goal">
+                        <option selected value="">Goal</option>
+                        <option value="test">test</option>
+                    </select>
+                </div>
 
             </div>
 
             <div class="modal-footer">
                 <div class="form-group mx-auto">
-                    <input type="submit" value="Save" class="btn btn-outline-primary" style="width: 100px">
+                    <input type="submit" onclick="add_task({% url 'board:add_task' %})" value="Save" class="btn btn-outline-primary" style="width: 100px">
                 </div>
             </div>
-        </form>
         </div>
     </div>
 </div>
-
+<script src="{% static 'tasks_board/js/base.js' %}"></script>

@@ -12,10 +12,8 @@ function login_user(endpoint, next){
             'password':password,
         },
         success : function(data){
-            console.log(data);
             if(data['message'] == "Success"){
                 window.location.href = next;
-                // location.reload(next)
             }
             else{
                 $("#login_error").html("Invalid login data. Try again");
@@ -23,3 +21,37 @@ function login_user(endpoint, next){
         }
     });
 }
+
+
+function add_task(endpoint){
+    title = document.getElementById("title").value;
+    date = document.getElementById("date").value;
+    priority = document.getElementById("priority").value;
+    goal = document.getElementById("goal").value;
+    status = document.getElementById("status").checked;
+    csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    // $("#login_error").html("");
+    $.ajax({
+        type:"POST",
+        url: endpoint,
+        data:{
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            'title': title,
+            'date': date,
+            'priority': priority,
+            'goal': goal,
+            'status': status
+        },
+        success : function(response){
+            if(response == "OK"){
+                $('#add_task').modal('hide');
+                location.reload();
+            }
+            // else{
+            //     $("#login_error").html("Invalid login data. Try again");
+            // }
+        }
+    });
+}
+
+
