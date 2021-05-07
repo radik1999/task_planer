@@ -2,6 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.db import models
+from django.utils.timezone import now
 
 
 class Priority(models.IntegerChoices):
@@ -24,7 +25,7 @@ class DailyTask(models.Model):
     title = models.CharField(max_length=128)
     priority = models.IntegerField(default=Priority.LOW, choices=Priority.choices)
     status = models.BooleanField(default=False)
-    date = models.DateField(default=datetime.date.today())
+    date = models.DateField(default=now())
     main_task = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     goal = models.ForeignKey(Goal, on_delete=models.SET_NULL, blank=True, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)

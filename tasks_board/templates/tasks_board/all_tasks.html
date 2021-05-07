@@ -10,13 +10,13 @@
 {% block body %}
     <div class="p-5 text-center">
         {% for task in tasks %}
-            <h5>{{ task.title }}</h5>
-            <h5>{{ task.date }}</h5>
-            <h5>{{ task.priority }}</h5>
-            <h5>{{ task.goal }}</h5>
-            <h5>{{ task.status }}</h5>
+            <h6>{{ task.title }}</h6>
+            <h6>{{ task.date }}</h6>
+            <h6>{{ task.get_priority }}</h6>
+            <h6>{{ task.goal }}</h6>
+            <h6>{{ task.status }}</h6>
         {% endfor %}
-        {% include 'tasks_board/add_task.html' %}
+        {% include 'tasks_board/add_task.html' with goals=goals %}
         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
             Add Task
         </button>

@@ -30,7 +30,7 @@ function add_task(endpoint){
     goal = document.getElementById("goal").value;
     status = document.getElementById("status").checked;
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    // $("#login_error").html("");
+    $("#date_error").html("");
     $.ajax({
         type:"POST",
         url: endpoint,
@@ -43,13 +43,13 @@ function add_task(endpoint){
             'status': status
         },
         success : function(response){
-            if(response == "OK"){
+            if(response == "ok"){
                 $('#add_task').modal('hide');
                 location.reload();
             }
-            // else{
-            //     $("#login_error").html("Invalid login data. Try again");
-            // }
+            else if(response == "date error"){
+                $("#date_error").html("Wrong date format");
+            }
         }
     });
 }
