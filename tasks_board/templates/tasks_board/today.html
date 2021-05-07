@@ -3,5 +3,21 @@
 {% block today_link_class %}active{% endblock %}
 
 {% block body %}
-    <h1>Today</h1>
+    <div class="px-5 py-3 ">
+        {% include 'tasks_board/add_task.html' with goals=goals %}
+        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
+            Add Task
+        </button>
+        <table class="table table-hover">
+        {% for task in tasks %}
+            <tr class="table-{{ task.get_color }}">
+                <th>
+                    <h6 class="mr-auto">{{ task.title }}</h6>
+                    <small>{{ task.day|date:"M d" }} {{ task.get_priority }}</small>
+                </th>
+            </tr>
+        {% endfor %}
+        </table>
+
+    </div>
 {% endblock %}

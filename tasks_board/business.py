@@ -8,7 +8,7 @@ def save_task_form(request):
     day = request.POST.get('date')
     if day:
         try:
-            task.date = date.fromisoformat(day)
+            task.day = date.fromisoformat(day)
         except ValueError:
             return 'date error'
     goal = request.POST.get('goal')
@@ -22,3 +22,5 @@ def save_task_form(request):
     task.owner = request.user
     task.save()
     return 'ok'
+
+

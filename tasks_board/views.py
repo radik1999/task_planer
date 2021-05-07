@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from datetime import date
+
 
 from .models import Goal, DailyTask
 from .business import save_task_form
@@ -14,6 +16,7 @@ from .business import save_task_form
 @login_required
 def all_tasks(request):
     tasks = DailyTask.objects.all()
+    tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
     goals = Goal.objects.all()
 
     return render(request, 'tasks_board/all_tasks.html', {'tasks': tasks, 'goals': goals})
@@ -28,7 +31,10 @@ def add_task(request):
 
 @login_required
 def current_day(request):
-    return render(request, 'tasks_board/today.html')
+    tasks = DailyTask.objects.filter(day=date.today())
+    tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
+    goals = Goal.objects.all()
+    return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
 
 
 @login_required
