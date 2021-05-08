@@ -54,4 +54,3 @@ function add_task(endpoint){
     });
 }
 
-

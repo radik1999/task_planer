@@ -1,7 +1,12 @@
 {% extends 'tasks_board/base.html' %}
+{% load static %}
 
-{% block today_link_class %}active{% endblock %}
+{% block title %}
+    All Tasks
+{% endblock %}
 
+
+{% block tasks_link_class %}active{% endblock %}
 {% block body %}
     <div class="px-5 py-3 ">
         {% include 'tasks_board/add_task.html' with goals=goals %}
@@ -23,5 +28,7 @@
             {% endfor %}
         </div>
 
+
     </div>
+
 {% endblock %}

@@ -3,7 +3,7 @@ from django.urls import path
 
 from tasks_board.views import (
     all_tasks, sign_up, sign_in, sign_out, current_day, upcoming,
-    add_task
+    add_task, task
 )
 
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('tasks/', all_tasks, name='tasks'),
     path('add_task/', add_task, name='add_task'),
     path('upcoming/', upcoming, name='upcoming'),
+    path('task/<int:_id>', task, name='task'),
 ]

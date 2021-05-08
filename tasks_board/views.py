@@ -13,23 +13,20 @@ from .models import Goal, DailyTask
 from .business import save_task_form
 
 
-@login_required
 def all_tasks(request):
     tasks = DailyTask.objects.all()
-    tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
+    tasks = sorted(tasks, key=lambda t: (t.priority, t.day), reverse=True)
     goals = Goal.objects.all()
 
-    return render(request, 'tasks_board/all_tasks.html', {'tasks': tasks, 'goals': goals})
+    return render(request, 'tasks_board/tasks.html', {'tasks': tasks, 'goals': goals})
 
 
-@login_required
 def add_task(request):
     if request.method == 'POST':
         result = save_task_form(request)
         return HttpResponse(result)
 
 
-@login_required
 def current_day(request):
     tasks = DailyTask.objects.filter(day=date.today())
     tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
@@ -37,9 +34,13 @@ def current_day(request):
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
 
 
-@login_required
 def upcoming(request):
     return render(request, 'tasks_board/upcoming.html')
+
+
+def task(request, _id):
+    task = DailyTask.objects.get(pk=_id)
+    return render(request, 'tasks_board/task.html', {'task': task})
 
 
 def sign_out(request):

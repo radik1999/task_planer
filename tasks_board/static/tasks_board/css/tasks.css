@@ -1,0 +1,16 @@
+.row{
+    height: 60px;
+}
+
+.task_link:hover{
+    background-color: #9f9f9f;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+hr{
+    margin-top: 0;
+    margin-bottom: 0;
+}
