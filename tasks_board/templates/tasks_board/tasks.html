@@ -8,27 +8,14 @@
 
 {% block tasks_link_class %}active{% endblock %}
 {% block body %}
-    <div class="px-5 py-3 ">
-        {% include 'tasks_board/add_task.html' with goals=goals %}
-        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
-            Add Task
-        </button>
-        <div class="container tasks mt-3 px-5">
-            <hr>
-            {% for task in tasks %}
-            <div class="task_link">
-                <a class="row text-dark" href="{% url 'board:task' task.id %}">
-                    <div class="col ml-3">
-                        <h6 class="">{{ task.title }}</h6>
-                        <small class="ml-2">{{ task.day|date:"M d" }} </small>
-                    </div>
-                </a>
-                <hr class="bg-{{ task.get_color }}">
-            </div>
-            {% endfor %}
-        </div>
-
-
+    {% include 'tasks_board/add_task.html' with goals=goals %}
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_task">
+        Add Task
+    </button>
+    <div class="container tasks mt-3 px-5">
+        <hr>
+        {% for task in tasks %}
+            {% include 'tasks_board/task_column.html' with task=task %}
+        {% endfor %}
     </div>
-
 {% endblock %}

@@ -21,12 +21,6 @@ def all_tasks(request):
     return render(request, 'tasks_board/tasks.html', {'tasks': tasks, 'goals': goals})
 
 
-def add_task(request):
-    if request.method == 'POST':
-        result = save_task_form(request)
-        return HttpResponse(result)
-
-
 def current_day(request):
     tasks = DailyTask.objects.filter(day=date.today())
     tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
@@ -41,6 +35,19 @@ def upcoming(request):
 def task(request, _id):
     task = DailyTask.objects.get(pk=_id)
     return render(request, 'tasks_board/task.html', {'task': task})
+
+
+def add_task(request):
+    if request.method == 'POST':
+        result = save_task_form(request)
+        return HttpResponse(result)
+
+
+def change_status(request, task_id):
+    task = DailyTask.objects.get(pk=task_id)
+    task.status = not task.status
+    task.save()
+    return HttpResponse('ok')
 
 
 def sign_out(request):

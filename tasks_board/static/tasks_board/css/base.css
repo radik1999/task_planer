@@ -30,3 +30,7 @@
 body{
     background: darkgray;
 }
+
+.div_status{
+    cursor: pointer;
+}

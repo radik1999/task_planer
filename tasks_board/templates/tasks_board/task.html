@@ -1,6 +1,58 @@
 {% extends 'tasks_board/base.html' %}
 
+{% load static %}
 
 {% block body %}
-    <h1>{{ task.title }}</h1>
+    <h2 class="text-center">Task</h2>
+    <div class="p-5">
+        <div class="row">
+            <div class="col-2 mt-3 text-center">
+                {% include 'tasks_board/task_status.html' with task=task %}
+            </div>
+            <h1 class="col-10">{{ task.title }}</h1>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h2>Priority:</h2>
+            </div>
+            <div class="col-10">
+                <h2>{{ task.get_priority }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h2>Status:</h2>
+            </div>
+            <div class="col-10">
+                <h2>{{ task.status }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h2>Goal:</h2>
+            </div>
+            <div class="col-10">
+                <h2>{{ task.goal }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h2>Planed to do:</h2>
+            </div>
+            <div class="col-10">
+                <h2>{{ task.day }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h2>Subtasks</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for task in task.sub_tasks %}
+                {% include 'tasks_board/task_column.html' with task=task %}
+            {% endfor %}
+        </div>
+
+    </div>
 {% endblock %}

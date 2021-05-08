@@ -54,3 +54,19 @@ function add_task(endpoint){
     });
 }
 
+function change_status(url){
+    csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    $.ajax({
+        type:"POST",
+        url: url,
+        data: {
+            'csrfmiddlewaretoken': csrfmiddlewaretoken
+        },
+        success : function(response){
+            if(response == "ok") {
+                location.reload();
+            }
+        }
+    });
+}
+
