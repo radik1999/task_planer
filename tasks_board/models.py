@@ -41,7 +41,16 @@ class DailyTask(models.Model):
 
     @property
     def color(self):
+        if self.status:
+            return 'green'
         bootstrap_colors = {'Low': 'gray', 'Normal': 'yellow', 'High': 'red'}
+        return bootstrap_colors[self.get_priority]
+
+    @property
+    def bootstrap_color(self):
+        if self.status:
+            return 'success'
+        bootstrap_colors = {'Low': 'secondary', 'Normal': 'warning', 'High': 'danger'}
         return bootstrap_colors[self.get_priority]
 
     @property

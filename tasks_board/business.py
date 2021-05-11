@@ -17,6 +17,10 @@ def save_task_form(request):
     priority = request.POST.get('priority')
     if priority:
         task.priority = priority
+    main_task = request.POST.get('main_task')
+    print(main_task)
+    if main_task:
+        task.main_task = DailyTask.objects.get(pk=main_task)
     status = request.POST.get('status')
     task.status = True if status == 'true' else False
     task.owner = request.user
@@ -24,3 +28,12 @@ def save_task_form(request):
     return 'ok'
 
 
+def change_task_status(task: DailyTask):
+    if not task.status:
+        task.status = True
+        for sub_task in task.sub_tasks:
+            sub_task.status = True
+            sub_task.save()
+    else:
+        task.status = False
+    task.save()

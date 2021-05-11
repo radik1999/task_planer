@@ -55,12 +55,13 @@
 
                     </select>
                 </div>
-
+                <input type="hidden" name="main_task" id="main_task" value={{ main_task.id }}>
             </div>
 
             <div class="modal-footer">
                 <div class="form-group mx-auto">
-                    <input type="submit" onclick="add_task({% url 'board:add_task' %})" value="Save" class="btn btn-outline-primary" style="width: 100px">
+                    <input type="submit" onclick="add_task({% url 'board:add_task' %})"
+                           value="Save" class="btn btn-outline-primary add_task_bth" style="width: 100px">
                 </div>
             </div>
         </div>

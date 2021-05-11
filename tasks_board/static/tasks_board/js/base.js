@@ -20,15 +20,22 @@ function login_user(endpoint, next){
             }
         }
     });
-}
+};
 
-
+// $(function(){
+//   $('.modal-content').keypress(function(e){
+//     if(e.which === 13) {
+//       $(".add_task_bth").click();
+//     }
+//   })
+// })
 function add_task(endpoint){
     title = document.getElementById("title").value;
     date = document.getElementById("date").value;
     priority = document.getElementById("priority").value;
     goal = document.getElementById("goal").value;
     status = document.getElementById("status").checked;
+    main_task = document.getElementById('main_task').value
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $("#date_error").html("");
     $.ajax({
@@ -40,7 +47,8 @@ function add_task(endpoint){
             'date': date,
             'priority': priority,
             'goal': goal,
-            'status': status
+            'status': status,
+            'main_task': main_task
         },
         success : function(response){
             if(response == "ok"){
@@ -52,7 +60,7 @@ function add_task(endpoint){
             }
         }
     });
-}
+};
 
 function change_status(url){
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
@@ -68,5 +76,5 @@ function change_status(url){
             }
         }
     });
-}
+};
 

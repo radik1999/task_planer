@@ -10,11 +10,11 @@ from datetime import date
 
 
 from .models import Goal, DailyTask
-from .business import save_task_form
+from .business import save_task_form, change_task_status
 
 
 def all_tasks(request):
-    tasks = DailyTask.objects.all()
+    tasks = DailyTask.objects.filter(main_task=None)
     tasks = sorted(tasks, key=lambda t: (t.priority, t.day), reverse=True)
     goals = Goal.objects.all()
 
@@ -22,7 +22,7 @@ def all_tasks(request):
 
 
 def current_day(request):
-    tasks = DailyTask.objects.filter(day=date.today())
+    tasks = DailyTask.objects.filter(day=date.today(), main_task=None)
     tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
@@ -45,8 +45,7 @@ def add_task(request):
 
 def change_status(request, task_id):
     task = DailyTask.objects.get(pk=task_id)
-    task.status = not task.status
-    task.save()
+    change_task_status(task)
     return HttpResponse('ok')
 
 
