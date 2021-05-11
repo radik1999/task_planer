@@ -2,6 +2,17 @@
     height: 60px;
 }
 
+.flex-fill{
+    height: 60px;
+}
+.task_link .header{
+    height: 30px;
+}
+.task_link .date{
+    height: 30px;
+}
+
+
 .task_link:hover{
     background-color: #9f9f9f;
 }

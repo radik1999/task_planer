@@ -1,12 +1,15 @@
 <div class="task_link">
-    <a class="row text-dark" href="{% url 'board:task' task.id %}">
-        <div class="col-sm-0 mt-3 ml-5">
+    <a class="text-dark d-flex" href="{% url 'board:task' task.id %}">
+        <div class="m-3">
             {% include 'tasks_board/task_status.html' with task=task %}
         </div>
-        <div class="col">
-            <h6 class="">{{ task.title }}</h6>
-            <small class="ml-2">{{ task.day|date:"M d" }} </small>
+        <div class="flex-fill">
+            <div class="mt-2 ml-5 header">
+                <h6 class="ml-5">{{ task.title }}</h6>
+            </div>
+            <div class="small text-right mr-5 date">{{ task.day|date:"M d" }} </div>
         </div>
+
     </a>
-    <hr>
 </div>
+<hr>
