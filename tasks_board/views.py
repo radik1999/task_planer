@@ -68,6 +68,7 @@ def sign_in(request):
 def task(request, task_id):
     task = DailyTask.objects.get(pk=task_id)
     goals = Goal.objects.all()
+    request.session['previous_url'] = request.META['HTTP_REFERER']
     return render(request, 'tasks_board/task.html', {'task': task, 'goals': goals})
 
 
@@ -92,7 +93,11 @@ def edit_task(request, task_id):
 
 
 def delete_task(request, task_id):
-    DailyTask.objects.get(pk=task_id).delete()
+    t = DailyTask.objects.get(pk=task_id)
+    main_task = t.main_task
+    t.delete()
+    if main_task:
+        return redirect('board:task', task_id=main_task.id)
     return redirect('board:tasks')
 
 
