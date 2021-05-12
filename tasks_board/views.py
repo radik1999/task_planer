@@ -102,5 +102,5 @@ def delete_task(request, task_id):
 
 
 def completed_tasks(request):
-    tasks = DailyTask.objects.filter(status=True)
+    tasks = DailyTask.objects.filter(status=True, main_task=None)
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks})
