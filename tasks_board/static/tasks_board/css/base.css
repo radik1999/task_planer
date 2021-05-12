@@ -34,3 +34,23 @@ body{
 .div_status{
     cursor: pointer;
 }
+
+.dropdown-toggle{
+    background: url("../images/dots.svg") no-repeat;
+    background-size: 100% 100%;
+    border: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.dropdown-toggle::before{
+    display: none !important;
+}
+
+.dropdown-toggle:focus{
+    outline: none;
+}
+
+.dropdown-menu a:hover{
+    background: #343a40;
+}

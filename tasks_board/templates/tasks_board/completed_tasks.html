@@ -1,0 +1,11 @@
+{% extends 'tasks_board/base.html' %}
+{% block competed_link_class %}active{% endblock %}
+
+{% block body %}
+    <div class="container tasks mt-3 px-5">
+        <hr>
+        {% for task in tasks %}
+            {% include 'tasks_board/task_column.html' with task=task %}
+        {% endfor %}
+    </div>
+{% endblock %}

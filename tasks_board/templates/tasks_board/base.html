@@ -51,6 +51,10 @@
                     <a class="btn btn-dark {% block upcoming_link_class %}{% endblock %}"
                        href="{% url 'board:upcoming' %}">Upcoming</a>
                 </li>
+                <li class="nav-item">
+                    <a class="btn btn-dark {% block competed_link_class %}{% endblock %}"
+                       href="{% url 'board:completed_tasks' %}">Completed tasks</a>
+                </li>
             </ul>
         </nav>
     </div>

@@ -14,7 +14,7 @@ from .business import save_task_form, change_task_status
 
 
 def all_tasks(request):
-    tasks = DailyTask.objects.filter(main_task=None)
+    tasks = DailyTask.objects.filter(main_task=None, status=False)
     tasks = sorted(tasks, key=lambda t: (t.priority, t.day), reverse=True)
     goals = Goal.objects.all()
 
@@ -22,7 +22,7 @@ def all_tasks(request):
 
 
 def current_day(request):
-    tasks = DailyTask.objects.filter(day=date.today(), main_task=None)
+    tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False)
     tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
@@ -30,23 +30,6 @@ def current_day(request):
 
 def upcoming(request):
     return render(request, 'tasks_board/upcoming.html')
-
-
-def task(request, _id):
-    task = DailyTask.objects.get(pk=_id)
-    return render(request, 'tasks_board/task.html', {'task': task})
-
-
-def add_task(request):
-    if request.method == 'POST':
-        result = save_task_form(request)
-        return HttpResponse(result)
-
-
-def change_status(request, task_id):
-    task = DailyTask.objects.get(pk=task_id)
-    change_task_status(task)
-    return HttpResponse('ok')
 
 
 def sign_out(request):
@@ -82,4 +65,37 @@ def sign_in(request):
             return HttpResponse(json.dumps({'message': "Denied"}), content_type='application/json')
 
 
+def task(request, task_id):
+    task = DailyTask.objects.get(pk=task_id)
+    goals = Goal.objects.all()
+    return render(request, 'tasks_board/task.html', {'task': task, 'goals': goals})
 
+
+def add_task(request):
+    if request.method == 'POST':
+        result = save_task_form(request)
+        return HttpResponse(result)
+
+
+def change_status(request, task_id):
+    task = DailyTask.objects.get(pk=task_id)
+    change_task_status(task)
+    return HttpResponse('ok')
+
+
+def edit_task(request, task_id):
+    task = DailyTask.objects.get(pk=task_id)
+    if request.method == 'POST':
+        result = save_task_form(request, task)
+        return HttpResponse(result)
+    return render(request, 'tasks_board/edit_task.html', {'task': task})
+
+
+def delete_task(request, task_id):
+    DailyTask.objects.get(pk=task_id).delete()
+    return redirect('board:tasks')
+
+
+def completed_tasks(request):
+    tasks = DailyTask.objects.filter(status=True)
+    return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks})

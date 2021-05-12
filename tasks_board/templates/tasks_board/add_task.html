@@ -1,6 +1,10 @@
 {% load static %}
 {% csrf_token %}
-<div class="modal" id="add_task">
+<div class="modal" id=
+        {% block modal_id %}
+            "add_task"
+        {% endblock %}
+     >
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
@@ -8,7 +12,11 @@
                 <div class="form-group">
                     <div class="form-check">
                         <div class="form-check-label font-weight-bold">
-                            <input type="checkbox" class="form-check-input " id="status" name="status">Done
+                            <input type="checkbox" class="form-check-input status" name="status"
+                                {% block task_status %}
+
+                                {% endblock %}
+                            >Done
                         </div>
                     </div>
                 </div>
@@ -23,7 +31,10 @@
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Title </span>
                         </div>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Task">
+                        <input type="text" class="form-control title" name="title" placeholder="Task"
+                            {% block task_title %}
+                            {% endblock %}
+                        >
                     </div>
                 </div>
 
@@ -32,35 +43,49 @@
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Date </span>
                         </div>
-                        <input type="text" class="form-control" id="date" name="date" value="{% now "Y-m-d" %}">
+                        <input type="text" class="form-control date" name="date"
+                                {% block task_day %}
+                                    {% if main_task %}
+                                        value="{{ main_task.day.isoformat }}"
+                                    {% else %}
+                                        value="{% now "Y-m-d" %}"
+                                    {% endif %}
+                                {% endblock %}
+                        >
                     </div>
                     <span id="date_error" class="text-danger ml-auto"></span>
                 </div>
 
                 <div class="form-group">
-                    <select class="custom-select" name="priority" id="priority">
-                        <option selected value="">Priority</option>
-                        <option value=0>Low</option>
-                        <option value=1>Normal</option>
-                        <option value=2>High</option>
+                    <select class="custom-select priority" name="priority">
+                        {% block task_priority %}
+                            <option selected value="">Priority</option>
+                            <option value=0>Low</option>
+                            <option value=1>Normal</option>
+                            <option value=2>High</option>
+                        {% endblock %}
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <select class="custom-select" name="goal" id="goal">
-                        <option selected value="">Goal</option>
-                        {% for goal in goals %}
-                            <option value={{ goal.id }}>{{ goal }}</option>
-                        {% endfor %}
-
+                    <select class="custom-select goal" name="goal">
+                        {% block goals %}
+                            <option selected value="">Goal</option>
+                            {% for goal in goals %}
+                                <option value={{ goal.id }}>{{ goal }}</option>
+                            {% endfor %}
+                        {% endblock %}
                     </select>
                 </div>
-                <input type="hidden" name="main_task" id="main_task" value={{ main_task.id }}>
+                <input class="main_task" type="hidden" name="main_task" value={{ main_task.id }}>
             </div>
 
             <div class="modal-footer">
                 <div class="form-group mx-auto">
-                    <input type="submit" onclick="add_task({% url 'board:add_task' %})"
+                    <input type="submit"
+                           {% block task_function %}
+                               onclick="add_task({% url 'board:add_task' %}, '#add_task')"
+                           {% endblock %}
                            value="Save" class="btn btn-outline-primary add_task_bth" style="width: 100px">
                 </div>
             </div>

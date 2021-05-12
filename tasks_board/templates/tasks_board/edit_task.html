@@ -1,0 +1,55 @@
+{% extends 'tasks_board/add_task.html' %}
+
+{% block modal_id %}
+    edit_task
+{% endblock %}
+
+
+{% block task_status %}
+    {% if task.status %}
+        checked
+    {% endif %}
+{% endblock %}
+
+{% block task_title %}
+    value="{{ task.title }}"
+{% endblock %}
+
+{% block task_day %}
+    value="{{ task.day.isoformat }}"
+{% endblock %}
+
+
+{% block task_priority %}
+    <option value=0
+        {% if task.priority == 0 %}
+            selected
+        {% endif %}
+    >Low</option>
+    <option value=1
+        {% if task.priority == 1 %}
+            selected
+        {% endif %}
+    >Normal</option>
+    <option value=2
+        {% if task.priority == 2 %}
+            selected
+        {% endif %}
+    >High</option>
+{% endblock %}
+
+
+{% block goals %}
+    {% for goal in goals %}
+        <option value={{ goal.id }}
+            {% if goal.id == task.goal.id %}
+                selected
+            {% endif %}
+        >{{ goal }}</option>
+    {% endfor %}
+{% endblock %}
+
+
+{% block task_function %}
+    onclick="add_task('{% url 'board:edit_task' task.id %}', '#edit_task')"
+{% endblock %}

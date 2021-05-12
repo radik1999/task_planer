@@ -3,12 +3,24 @@
 {% load static %}
 
 {% block body %}
+    {% include 'tasks_board/edit_task.html' with goasl=goals task=task %}
     {% include 'tasks_board/add_task.html' with goals=goals main_task=task %}
     <div class="p-5 border border-{{ task.bootstrap_color }} border-left-0 border-right-0">
         <div class="row">
-            <h1 class="col-6 mt-1 text-right">{{ task.title }}</h1>
-            <div class="col-6 mt-3 text-left">
+            <div class="col-6 mt-1 text-right">
+                <h1>{{ task.title }}</h1>
+            </div>
+            <div class="col-5 mt-3 text-left">
                 {% include 'tasks_board/task_status.html' with task=task %}
+            </div>
+            <div class="col-1 dropdown dropleft text-right">
+                <button class="btb task-menu dropdown-toggle" data-toggle="dropdown"></button>
+                <div class="dropdown-menu bg-secondary">
+                    <a class="dropdown-item btn-outline-dark"
+                       data-toggle="modal" data-target="#edit_task">Edit</a>
+                    <a class="dropdown-item"
+                       href='{% url 'board:delete_task' task.id %}'>Delete</a>
+                </div>
             </div>
 
         </div>

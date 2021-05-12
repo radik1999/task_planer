@@ -20,7 +20,7 @@ function login_user(endpoint, next){
             }
         }
     });
-};
+}
 
 // $(function(){
 //   $('.modal-content').keypress(function(e){
@@ -29,13 +29,15 @@ function login_user(endpoint, next){
 //     }
 //   })
 // })
-function add_task(endpoint){
-    title = document.getElementById("title").value;
-    date = document.getElementById("date").value;
-    priority = document.getElementById("priority").value;
-    goal = document.getElementById("goal").value;
-    status = document.getElementById("status").checked;
-    main_task = document.getElementById('main_task').value
+function add_task(endpoint, modal_id){
+
+    title = document.querySelector(modal_id + " .title").value;
+    date = document.querySelector(modal_id + " .date").value;
+    priority = document.querySelector(modal_id + " .priority").value;
+    goal = document.querySelector(modal_id + " .goal").value;
+    status = document.querySelector(modal_id + " .status").checked;
+    main_task = document.querySelector(modal_id + " .main_task").value
+    console.log(title, date, priority, goal, status, main_task);
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $("#date_error").html("");
     $.ajax({
@@ -52,7 +54,6 @@ function add_task(endpoint){
         },
         success : function(response){
             if(response == "ok"){
-                $('#add_task').modal('hide');
                 location.reload();
             }
             else if(response == "date error"){
@@ -60,7 +61,7 @@ function add_task(endpoint){
             }
         }
     });
-};
+}
 
 function change_status(url){
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
@@ -76,5 +77,4 @@ function change_status(url){
             }
         }
     });
-};
-
+}
