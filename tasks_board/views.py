@@ -89,7 +89,6 @@ def edit_task(request, task_id):
     if request.method == 'POST':
         result = save_task_form(request, task)
         return HttpResponse(result)
-    return render(request, 'tasks_board/edit_task.html', {'task': task})
 
 
 def delete_task(request, task_id):
@@ -103,4 +102,11 @@ def delete_task(request, task_id):
 
 def completed_tasks(request):
     tasks = DailyTask.objects.filter(status=True, main_task=None)
-    return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks})
+    goals = Goal.objects.all()
+    return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
+
+
+def all_goals(requests):
+    goals = Goal.objects.all()
+
+

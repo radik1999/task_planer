@@ -78,3 +78,10 @@ function change_status(url){
         }
     });
 }
+window.addEventListener('load', add_active_class)
+
+
+function add_active_class(element){
+    let active_link = document.querySelector(".left-nav a[href='" + location.pathname + "']")
+    active_link.classList.add("active")
+}

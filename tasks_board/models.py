@@ -14,11 +14,30 @@ class Priority(models.IntegerChoices):
 class Goal(models.Model):
     title = models.CharField(max_length=128)
     priority = models.IntegerField(default=Priority.LOW, choices=Priority.choices)
-    main_goal = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.title
+
+    @property
+    def get_priority(self):
+        for choice in Priority.choices:
+            if self.priority in choice:
+                return choice[1]
+
+    @property
+    def color(self):
+        colors = {'Low': 'gray', 'Normal': 'yellow', 'High': 'red'}
+        return colors[self.get_priority]
+
+    @property
+    def bootstrap_color(self):
+        bootstrap_colors = {'Low': 'secondary', 'Normal': 'warning', 'High': 'danger'}
+        return bootstrap_colors[self.get_priority]
+
+    @property
+    def tasks(self):
+        return DailyTask.objects.filter(owner=self.owner, goal=self)
 
 
 class DailyTask(models.Model):
@@ -43,8 +62,8 @@ class DailyTask(models.Model):
     def color(self):
         if self.status:
             return 'green'
-        bootstrap_colors = {'Low': 'gray', 'Normal': 'yellow', 'High': 'red'}
-        return bootstrap_colors[self.get_priority]
+        colors = {'Low': 'gray', 'Normal': 'yellow', 'High': 'red'}
+        return colors[self.get_priority]
 
     @property
     def bootstrap_color(self):
