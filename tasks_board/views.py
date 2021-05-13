@@ -106,7 +106,8 @@ def completed_tasks(request):
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
 
 
-def all_goals(requests):
-    goals = Goal.objects.all()
-
-
+def goal(request, goal_id):
+    if request.method == 'GET':
+        goal = Goal.objects.get(pk=goal_id)
+        goals = Goal.objects.all()
+        return render(request, 'tasks_board/goal.html', {'goal': goal, 'goals': goals})

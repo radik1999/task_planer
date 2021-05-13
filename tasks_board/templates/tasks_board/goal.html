@@ -1,0 +1,10 @@
+{% extends 'tasks_board/base.html' %}
+
+{% block body %}
+    <h1>{{ goal.title }}</h1>
+    <div class="goals_tasks p-5">
+        {% for task in goal.tasks %}
+            {% include 'tasks_board/task_column.html' with task=task %}
+        {% endfor %}
+    </div>
+{% endblock %}

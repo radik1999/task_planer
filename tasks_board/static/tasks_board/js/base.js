@@ -82,6 +82,10 @@ window.addEventListener('load', add_active_class)
 
 
 function add_active_class(element){
-    let active_link = document.querySelector(".left-nav a[href='" + location.pathname + "']")
+    let link = location.pathname
+    let active_link = document.querySelector(".left-nav a[href='" + link + "']")
+    if (link.includes('goal')){
+        document.querySelector('#goals_nav').classList.add('show')
+    }
     active_link.classList.add("active")
 }

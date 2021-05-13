@@ -37,7 +37,7 @@ class Goal(models.Model):
 
     @property
     def tasks(self):
-        return DailyTask.objects.filter(owner=self.owner, goal=self)
+        return DailyTask.objects.filter(owner=self.owner, goal=self, main_task=None)
 
 
 class DailyTask(models.Model):

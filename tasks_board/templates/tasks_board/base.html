@@ -72,8 +72,8 @@
                 <ul class="navbar-nav">
                     {% for goal in goals %}
                         <li class="nav-item">
-                            <a class="pl-5 nav-link btn btn-dark "
-                               href="#">{{ goal.title }}</a>
+                            <a class="pl-5 nav-link btn btn-dark"
+                               href="{% url 'board:goal' goal.id %}">{{ goal.title }}</a>
                         </li>
                     {% endfor %}
                 </ul>
