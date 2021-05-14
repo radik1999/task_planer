@@ -2,16 +2,25 @@
 
 {% block body %}
     {% include 'tasks_board/add_goal_task.html' with goal=goal %}
-    <div class="px-5 d-flex justify-content-around">
-        <div class="text-center">
-            <h1>{{ goal.title }}</h1>
-        </div>
-        <div>
+    {% include 'tasks_board/edit_goal.html' with goal=goal %}
+    <div class="px-3 d-flex justify-content-around">
+
+        <div class="">
             <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_task">Add Task</button>
         </div>
+        <div class="mr-5">
+            <h1>{{ goal.title }}</h1>
+        </div>
 
-        <div>
 
+        <div class="dropdown dropleft ml-5">
+            <button class="btb task-menu dropdown-toggle" data-toggle="dropdown"></button>
+            <div class="dropdown-menu bg-secondary">
+                <a class="dropdown-item btn-outline-dark"
+                   data-toggle="modal" data-target="#edit_goal">Edit</a>
+                <a class="dropdown-item"
+                   href="{% url 'board:delete_goal' goal.id %}">Delete</a>
+            </div>
         </div>
 
     </div>

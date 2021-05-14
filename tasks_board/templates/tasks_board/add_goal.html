@@ -1,6 +1,6 @@
 {% load static %}
 {% csrf_token %}
-<div class="modal" id="add_goal">
+<div class="modal" id="{% block modal_id %}add_goal{% endblock %}">
     <div class="modal-dialog">
         <div class="modal-content bg-dark">
             <div class="modal-header">
@@ -14,8 +14,7 @@
                         <span class="input-group-text"> Title </span>
                         </div>
                         <input type="text" class="form-control title" name="title" placeholder="Goal"
-                            {% block goal_title %}
-                            {% endblock %}
+                            value="{% block goal_title %}{% endblock %}"
                         >
                     </div>
                 </div>
@@ -35,10 +34,8 @@
 
             <div class="modal-footer">
                 <div class="form-group mx-auto">
-                    <input type="submit"
-                           {% block task_function %}
-                               onclick="add_goal({% url 'board:add_goal' %}, '#add_goal')"
-                           {% endblock %}
+                    <input type="submit" onclick="
+                            {% block goal_function %}add_goal({% url 'board:add_goal' %}, '#add_goal'){% endblock %}"
                            value="Save" class="btn btn-outline-primary add_task_bth" style="width: 100px">
                 </div>
             </div>

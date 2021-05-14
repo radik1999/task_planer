@@ -123,3 +123,15 @@ def add_goal(request):
     if request.method == 'POST':
         result = save_goal_form(request)
         return HttpResponse(result)
+
+
+def delete_goal(request, goal_id):
+    Goal.objects.get(pk=goal_id).delete()
+    return redirect('board:goals')
+
+
+def edit_goal(request, goal_id):
+    goal = Goal.objects.get(pk=goal_id)
+    if request.method == 'POST':
+        result = save_goal_form(request, goal)
+        return HttpResponse(result)

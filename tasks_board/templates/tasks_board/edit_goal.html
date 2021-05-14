@@ -1,0 +1,29 @@
+{% extends 'tasks_board/add_goal.html' %}
+
+
+{% block modal_id %}edit_goal{% endblock %}
+
+{% block goal_title %}{{ goal.title }}{% endblock %}
+
+{% block task_priority %}
+    <option value=0
+        {% if goal.priority == 0 %}
+            selected
+        {% endif %}
+    >Low</option>
+    <option value=1
+        {% if goal.priority == 1 %}
+            selected
+        {% endif %}
+    >Normal</option>
+    <option value=2
+        {% if goal.priority == 2 %}
+            selected
+        {% endif %}
+    >High</option>
+{% endblock %}
+
+
+{% block goal_function %}
+    add_goal('{% url 'board:edit_goal' goal.id %}', '#edit_goal')
+{% endblock %}
