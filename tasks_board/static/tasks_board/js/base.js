@@ -37,7 +37,6 @@ function add_task(endpoint, modal_id){
     goal = document.querySelector(modal_id + " .goal").value;
     status = document.querySelector(modal_id + " .status").checked;
     main_task = document.querySelector(modal_id + " .main_task").value
-    console.log(title, date, priority, goal, status, main_task);
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $("#date_error").html("");
     $.ajax({
@@ -63,6 +62,27 @@ function add_task(endpoint, modal_id){
     });
 }
 
+function add_goal(endpoint, modal_id){
+    title = document.querySelector(modal_id + " .title").value;
+    priority = document.querySelector(modal_id + " .priority").value;
+    csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+    $("#date_error").html("");
+    $.ajax({
+        type:"POST",
+        url: endpoint,
+        data:{
+            'csrfmiddlewaretoken': csrfmiddlewaretoken,
+            'title': title,
+            'priority': priority,
+        },
+        success : function(response){
+            if(response == "ok"){
+                location.reload();
+            }
+        }
+    });
+}
+
 function change_status(url){
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $.ajax({
@@ -72,12 +92,13 @@ function change_status(url){
             'csrfmiddlewaretoken': csrfmiddlewaretoken
         },
         success : function(response){
-            if(response == "ok") {
+            if(response == "ok"){
                 location.reload();
             }
         }
-    });
+    })
 }
+
 window.addEventListener('load', add_active_class)
 
 

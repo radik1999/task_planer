@@ -35,6 +35,21 @@ def save_task_form(request, task_to_edit=None):
     return 'ok'
 
 
+def save_goal_form(request, goal_to_edit=None):
+    goal = goal_to_edit if goal_to_edit else Goal()
+
+    goal.title = request.POST.get('title')
+
+    priority = request.POST.get('priority')
+    if priority:
+        goal.priority = priority
+
+    goal.owner = request.user
+
+    goal.save()
+    return 'ok'
+
+
 def change_task_status(task: DailyTask):
     if not task.status:
         task.status = True

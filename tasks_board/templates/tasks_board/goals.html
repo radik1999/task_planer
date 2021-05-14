@@ -1,0 +1,14 @@
+{% extends 'tasks_board/base.html' %}
+
+
+{% block body %}
+    {% include 'tasks_board/add_goal.html' %}
+
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#add_goal">Add Goal</button>
+    <div class="container tasks mt-3 px-5">
+        <hr>
+        {% for goal in goals %}
+            {% include 'tasks_board/goal_column.html' with goal=goal %}
+        {% endfor %}
+    </div>
+{% endblock %}

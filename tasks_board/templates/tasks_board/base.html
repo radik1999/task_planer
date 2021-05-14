@@ -36,6 +36,8 @@
             </li>
         </ul>
     </nav>
+
+
     <div class="left-nav bg-dark">
         <nav class="navbar p-0 pt-5">
             <button class="pl-4 navbar-toggler btn btn-dark"
@@ -68,14 +70,12 @@
                 </svg>
                    Goals
                 </button>
-            <div class="collapse navbar-collapse mt-2" id="goals_nav">
+            <div class="collapse navbar-collapse mt-2 show" id="goals_nav">
                 <ul class="navbar-nav">
-                    {% for goal in goals %}
-                        <li class="nav-item">
-                            <a class="pl-5 nav-link btn btn-dark"
-                               href="{% url 'board:goal' goal.id %}">{{ goal.title }}</a>
-                        </li>
-                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="pl-5 nav-link btn btn-dark"
+                           href="{% url 'board:goals' %}">All goals</a>
+                    </li>
                 </ul>
             </div>
         </nav>

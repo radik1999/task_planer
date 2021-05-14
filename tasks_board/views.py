@@ -10,7 +10,7 @@ from datetime import date
 
 
 from .models import Goal, DailyTask
-from .business import save_task_form, change_task_status
+from .business import save_task_form, change_task_status, save_goal_form
 
 
 def all_tasks(request):
@@ -111,3 +111,15 @@ def goal(request, goal_id):
         goal = Goal.objects.get(pk=goal_id)
         goals = Goal.objects.all()
         return render(request, 'tasks_board/goal.html', {'goal': goal, 'goals': goals})
+
+
+def all_goals(request):
+    if request.method == 'GET':
+        goals = Goal.objects.all()
+        return render(request, 'tasks_board/goals.html', {'goals': goals})
+
+
+def add_goal(request):
+    if request.method == 'POST':
+        result = save_goal_form(request)
+        return HttpResponse(result)

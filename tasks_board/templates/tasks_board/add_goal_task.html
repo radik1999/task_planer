@@ -1,0 +1,6 @@
+{% extends 'tasks_board/add_task.html' %}
+
+
+{% block goals %}
+    <option selected value={{ goal.id }}>{{ goal.title }}</option>
+{% endblock %}
