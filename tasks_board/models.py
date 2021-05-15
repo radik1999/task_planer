@@ -37,7 +37,9 @@ class Goal(models.Model):
 
     @property
     def tasks(self):
-        return DailyTask.objects.filter(owner=self.owner, goal=self, main_task=None)
+        tasks = DailyTask.objects.filter(owner=self.owner, goal=self, main_task=None)
+        tasks = sorted(tasks, key=lambda t: (not t.status, t.day, t.priority), reverse=True)
+        return tasks
 
 
 class DailyTask(models.Model):
@@ -74,4 +76,6 @@ class DailyTask(models.Model):
 
     @property
     def sub_tasks(self):
-        return DailyTask.objects.filter(owner=self.owner, main_task=self)
+        tasks = DailyTask.objects.filter(owner=self.owner, main_task=self)
+        tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
+        return tasks

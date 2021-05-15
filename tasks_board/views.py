@@ -17,7 +17,7 @@ from .business import save_task_form, change_task_status, save_goal_form
 def all_tasks(request):
     request.session['return_page'] = 'board:tasks'
     tasks = DailyTask.objects.filter(main_task=None, status=False)
-    tasks = sorted(tasks, key=lambda t: (t.priority, t.day), reverse=True)
+    tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
 
     return render(request, 'tasks_board/tasks.html', {'tasks': tasks, 'goals': goals})
@@ -26,7 +26,7 @@ def all_tasks(request):
 def current_day(request):
     request.session['return_page'] = 'board:today'
     tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False)
-    tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
+    tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
 
@@ -109,6 +109,7 @@ def delete_task(request, task_id):
 def completed_tasks(request):
     request.session['return_page'] = 'board:completed_tasks'
     tasks = DailyTask.objects.filter(status=True, main_task=None)
+    tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
 
