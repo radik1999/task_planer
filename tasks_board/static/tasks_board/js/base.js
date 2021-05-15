@@ -35,7 +35,6 @@ function add_task(endpoint, modal_id){
     date = document.querySelector(modal_id + " .date").value;
     priority = document.querySelector(modal_id + " .priority").value;
     goal = document.querySelector(modal_id + " .goal").value;
-    status = document.querySelector(modal_id + " .status").checked;
     main_task = document.querySelector(modal_id + " .main_task").value
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $("#date_error").html("");
@@ -48,7 +47,6 @@ function add_task(endpoint, modal_id){
             'date': date,
             'priority': priority,
             'goal': goal,
-            'status': status,
             'main_task': main_task
         },
         success : function(response){

@@ -4,14 +4,10 @@
     {% include 'tasks_board/add_goal_task.html' with goal=goal %}
     {% include 'tasks_board/edit_goal.html' with goal=goal %}
     <div class="px-3 d-flex justify-content-around">
-        <h2 class="text-{{ goal.bootstrap_color }}">{{ goal.title }}</h2>
-        <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_task">
-            <svg height="18px" width="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
-            </svg>
-            <strong>Task</strong>
-        </button>
-
+        <div>
+            <h2 class="">{{ goal.title }}</h2>
+        </div>
+        <div class="mx-5"></div>
         <div class="dropdown dropleft ml-5">
             <button class="btb task-menu dropdown-toggle" data-toggle="dropdown"></button>
             <div class="dropdown-menu bg-secondary">
@@ -23,13 +19,25 @@
         </div>
 
     </div>
-    <hr class="mt-5">
-    <h3 class="ml-3 mt-3">Tasks</h3>
-
+    <hr class="mt-5 bg-{{ goal.bootstrap_color }}">
+    <div class="d-flex justify-content-around mt-2">
+        <div class="mt-3">
+            <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_task">
+                <svg height="18px" width="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                </svg>
+                <strong>Task</strong>
+            </button>
+        </div>
+        <div class="mr-5">
+            <h3 class="ml-3 mt-3">Tasks</h3>
+        </div>
+        <div></div>
+    </div>
     <div class="goals_tasks p-5">
         <hr>
         {% for task in goal.tasks %}
-            {% include 'tasks_board/task_column.html' with task=task %}
+            {% include 'tasks_board/task_column.html' with task=task goal_icon='true' %}
         {% endfor %}
     </div>
 {% endblock %}

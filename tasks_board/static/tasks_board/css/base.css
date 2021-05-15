@@ -37,10 +37,12 @@
 .body{
     margin-left: 25%;
     margin-top: 55px;
+    font-family: Сomic Sans MS, serif;
 }
 
 body{
     background: darkgray;
+    font-family: Arial, serif;
 }
 
 .div_status{
