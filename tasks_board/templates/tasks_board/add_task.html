@@ -13,8 +13,8 @@
             </div>
 
             <div class="modal-body">
-                <div class="form-group">
-                    <div class="input-group mb-3">
+                <div class="form-group mb-0">
+                    <div class="input-group">
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Title </span>
                         </div>
@@ -23,10 +23,12 @@
                             {% endblock %}
                         >
                     </div>
+                    <span id="title_error" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group mb-3">
+
+                <div class="form-group mt-3 mb-0">
+                    <div class="input-group">
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Date </span>
                         </div>
@@ -43,7 +45,7 @@
                     <span id="date_error" class="text-danger ml-auto"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <select class="custom-select priority" name="priority">
                         {% block task_priority %}
                             <option selected value="">Priority</option>

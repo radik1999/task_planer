@@ -56,6 +56,9 @@ function add_task(endpoint, modal_id){
             else if(response == "date error"){
                 $("#date_error").html("Wrong date format");
             }
+            else if(response == 'blank title'){
+                $("#title_error").html("Title should not be blank");
+            }
         }
     });
 }
@@ -64,7 +67,7 @@ function add_goal(endpoint, modal_id){
     title = document.querySelector(modal_id + " .title").value;
     priority = document.querySelector(modal_id + " .priority").value;
     csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    $("#date_error").html("");
+
     $.ajax({
         type:"POST",
         url: endpoint,
@@ -76,6 +79,9 @@ function add_goal(endpoint, modal_id){
         success : function(response){
             if(response == "ok"){
                 location.reload();
+            }
+            if (response == 'blank title'){
+                $("#title_error").html("Title should not be blank");
             }
         }
     });

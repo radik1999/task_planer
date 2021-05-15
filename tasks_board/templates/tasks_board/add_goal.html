@@ -8,8 +8,8 @@
             </div>
 
             <div class="modal-body">
-                <div class="form-group">
-                    <div class="input-group mb-3">
+                <div class="form-group mb-0">
+                    <div class="input-group">
                         <div class="input-group-prepend">
                         <span class="input-group-text"> Title </span>
                         </div>
@@ -17,9 +17,11 @@
                             value="{% block goal_title %}{% endblock %}"
                         >
                     </div>
-                </div>
 
-                <div class="form-group">
+                </div>
+                <span id="title_error" class="text-danger"></span>
+
+                <div class="form-group mt-3">
                     <select class="custom-select priority" name="priority">
                         {% block goal_priority %}
                             <option selected value="">Priority</option>

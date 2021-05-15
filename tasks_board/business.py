@@ -5,7 +5,11 @@ from datetime import date
 def save_task_form(request, task_to_edit=None):
     task = task_to_edit if task_to_edit else DailyTask()
 
-    task.title = request.POST.get('title')
+    title = request.POST.get('title')
+    if not title:
+        return 'blank title'
+    else:
+        task.title = title
 
     day = request.POST.get('date')
     if day:
@@ -38,7 +42,11 @@ def save_task_form(request, task_to_edit=None):
 def save_goal_form(request, goal_to_edit=None):
     goal = goal_to_edit if goal_to_edit else Goal()
 
-    goal.title = request.POST.get('title')
+    title = request.POST.get('title')
+    if not title:
+        return 'blank title'
+    else:
+        goal.title = title
 
     priority = request.POST.get('priority')
     if priority:
