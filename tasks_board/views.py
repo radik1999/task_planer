@@ -8,12 +8,14 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from datetime import date
 
+from django.urls import reverse
 
 from .models import Goal, DailyTask
 from .business import save_task_form, change_task_status, save_goal_form
 
 
 def all_tasks(request):
+    request.session['return_page'] = 'board:tasks'
     tasks = DailyTask.objects.filter(main_task=None, status=False)
     tasks = sorted(tasks, key=lambda t: (t.priority, t.day), reverse=True)
     goals = Goal.objects.all()
@@ -22,6 +24,7 @@ def all_tasks(request):
 
 
 def current_day(request):
+    request.session['return_page'] = 'board:today'
     tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False)
     tasks = sorted(tasks, key=lambda task: (task.priority, task.day), reverse=True)
     goals = Goal.objects.all()
@@ -97,10 +100,14 @@ def delete_task(request, task_id):
     t.delete()
     if main_task:
         return redirect('board:task', task_id=main_task.id)
+    elif request.session['return_page']:
+        return redirect(request.session['return_page'])
     return redirect('board:tasks')
+    # return HttpResponse('ok')
 
 
 def completed_tasks(request):
+    request.session['return_page'] = 'board:completed_tasks'
     tasks = DailyTask.objects.filter(status=True, main_task=None)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
@@ -108,6 +115,7 @@ def completed_tasks(request):
 
 def goal(request, goal_id):
     if request.method == 'GET':
+        request.session['return_page'] = reverse('board:goal', kwargs={'goal_id': goal_id})
         goal = Goal.objects.get(pk=goal_id)
         goals = Goal.objects.all()
         return render(request, 'tasks_board/goal.html', {'goal': goal, 'goals': goals})

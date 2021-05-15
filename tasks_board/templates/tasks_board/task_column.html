@@ -8,7 +8,13 @@
                 <h6>{{ task.title }}</h6>
 
             </div>
-            <div class="small text-right mr-5 day">{{ task.day|date:"M d" }} </div>
+            <div class="d-flex justify-content-between small mr-5 day">
+                <div>
+                </div>
+                <div>
+                {{ task.day|date:"M d" }}
+                </div>
+            </div>
         </div>
 
     </a>

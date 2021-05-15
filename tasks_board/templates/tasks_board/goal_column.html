@@ -1,11 +1,9 @@
-<div class="task_link d-flex">
+<div class="mb-1 task_link d-flex border border-{{ goal.bootstrap_color }}">
     <a class="text-dark d-flex flex-fill" href="{% url 'board:goal' goal.id %}">
         <div class="flex-fill">
             <div class="d-flex justify-content-between mt-2 ml-5 header">
                 <h6>{{ goal.title }}</h6>
             </div>
         </div>
-
     </a>
 </div>
-<hr class="bg-{{ goal.bootstrap_color }}">
