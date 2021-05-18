@@ -16,7 +16,7 @@
 </head>
 <body>
 {% csrf_token %}
-    <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top top-nav py-1">
+    <nav class="navbar navbar-expand bg-dark navbar-dark fixed-top top-nav py-1 px-5">
         <a class="navbar-brand ml-3" href="{% url 'board:today' %}">Planer</a>
 
         {% block navi %}
@@ -28,6 +28,9 @@
                 <div class="dropdown">
                     <button class="btb dropdown-toggle profile" data-toggle="dropdown"></button>
                     <div class="dropdown-menu dropdown-menu-right bg-secondary mt-2 p-1">
+                        <a class="dropdown-item btn text-white" href="{% url 'board:profile' %}">
+                            Profile
+                        </a>
                         <a class="dropdown-item btn text-white" href="{% url 'board:sign_out' %}">
                         Log out
                         </a>
@@ -87,9 +90,11 @@
     </div>
 
     <div class="body p-5">
-        <a class="btn bth-outline-primary" href="{% url 'board:back' %}">
-            <h5>&#8678;  back</h5>
-        </a>
+        {% block button_back %}
+            <a class="btn bth-outline-primary" href="{% url 'board:back' %}">
+                <h5>&#8678;  back</h5>
+            </a>
+        {% endblock %}
         {% block body %}
         {% endblock %}
     </div>

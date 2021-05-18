@@ -11,12 +11,13 @@ from datetime import date
 from django.urls import reverse
 
 from .models import Goal, DailyTask
-from .business import save_task_form, change_task_status, save_goal_form
+from .business.business import save_task_form, change_task_status, save_goal_form
+from .business.satistic import Category
 
 
 def all_tasks(request):
     request.session['return_page'] = 'board:tasks'
-    tasks = DailyTask.objects.filter(main_task=None, status=False)
+    tasks = DailyTask.objects.filter(main_task=None, status=False, owner=request.user)
     tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
 
@@ -25,7 +26,7 @@ def all_tasks(request):
 
 def current_day(request):
     request.session['return_page'] = 'board:today'
-    tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False)
+    tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False, owner=request.user)
     tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
@@ -107,7 +108,7 @@ def delete_task(request, task_id):
 
 def completed_tasks(request):
     request.session['return_page'] = 'board:completed_tasks'
-    tasks = DailyTask.objects.filter(status=True, main_task=None)
+    tasks = DailyTask.objects.filter(status=True, main_task=None, owner=request.user)
     tasks = sorted(tasks, key=lambda t: (t.day, t.priority), reverse=True)
     goals = Goal.objects.all()
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
@@ -124,7 +125,7 @@ def goal(request, goal_id):
 def all_goals(request):
     if request.method == 'GET':
         request.session['return_page'] = 'board:goals'
-        goals = Goal.objects.all()
+        goals = Goal.objects.filter(owner=request.user)
         goals = sorted(goals, key=lambda g: g.priority, reverse=True)
         return render(request, 'tasks_board/goals.html', {'goals': goals})
 
@@ -149,3 +150,23 @@ def edit_goal(request, goal_id):
 
 def back(request):
     return redirect(request.session['return_page'])
+
+
+def profile(request):
+    category_list = []
+    tasks = DailyTask.objects.filter(owner=request.user)
+    # print(filter(lambda task: task.status, tasks))
+    all_tasks = Category('All tasks', tasks)
+    category_list.append(all_tasks)
+
+    tasks = DailyTask.objects.filter(owner=request.user, day=date.today())
+    today_tasks = Category('Today tasks', tasks)
+    category_list.append(today_tasks)
+
+    goals = Goal.objects.all()
+
+    for goal in goals:
+        goal_tasks = Category(goal.title, goal.tasks)
+        category_list.append(goal_tasks)
+
+    return render(request, 'tasks_board/profile.html', {'categories': category_list})
