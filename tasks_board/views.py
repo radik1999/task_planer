@@ -103,7 +103,6 @@ def delete_task(request, task_id):
     elif request.session['return_page']:
         return redirect(request.session['return_page'])
     return redirect('board:tasks')
-    # return HttpResponse('ok')
 
 
 def completed_tasks(request):
@@ -124,7 +123,9 @@ def goal(request, goal_id):
 
 def all_goals(request):
     if request.method == 'GET':
+        request.session['return_page'] = 'board:goals'
         goals = Goal.objects.all()
+        goals = sorted(goals, key=lambda g: g.priority, reverse=True)
         return render(request, 'tasks_board/goals.html', {'goals': goals})
 
 
@@ -144,3 +145,7 @@ def edit_goal(request, goal_id):
     if request.method == 'POST':
         result = save_goal_form(request, goal)
         return HttpResponse(result)
+
+
+def back(request):
+    return redirect(request.session['return_page'])

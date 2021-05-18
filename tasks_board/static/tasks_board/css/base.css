@@ -3,7 +3,7 @@
 }
 
 .navbar-brand{
-    color: blueviolet !important;
+    color: #007bff !important;
 }
 
 .left-nav a{
@@ -11,7 +11,6 @@
     text-align: left;
     margin-right: 2px;
     margin-left: 20%;
-    /*padding-left: 5px !important;*/
 }
 
 .left-nav button{
@@ -20,7 +19,7 @@
     text-align: left;
     margin-right: 2px;
     margin-left: 20%;
-    color: blueviolet;
+    color: #007bff;
 }
 
 .left-nav{
@@ -37,7 +36,7 @@
 .body{
     margin-left: 25%;
     margin-top: 55px;
-    font-family: Сomic Sans MS, serif;
+    font-family: Helvetica, serif;
 }
 
 body{
@@ -49,15 +48,18 @@ body{
     cursor: pointer;
 }
 
-.dropdown-toggle{
-    background: url("../images/dots.svg") no-repeat;
+.profile{
+    background: url("../images/user-profile.svg") no-repeat;
     background-size: 100% 100%;
     border: 0;
-    width: 20px;
-    height: 20px;
+    width: 45px;
+    height: 45px;
 }
 
 .dropdown-toggle::before{
+    display: none !important;
+}
+.dropdown-toggle::after{
     display: none !important;
 }
 

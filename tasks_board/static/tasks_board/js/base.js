@@ -53,11 +53,12 @@ function add_task(endpoint, modal_id){
             if(response == "ok"){
                 location.reload();
             }
-            else if(response == "date error"){
-                $("#date_error").html("Wrong date format");
+            console.log(response)
+            if(response === "date error"){
+                $(modal_id + " #date_error").html("Wrong date format");
             }
-            else if(response == 'blank title'){
-                $("#title_error").html("Title should not be blank");
+            if(response === 'blank title'){
+                $(modal_id + " #title_error").html("Title should not be blank");
             }
         }
     });

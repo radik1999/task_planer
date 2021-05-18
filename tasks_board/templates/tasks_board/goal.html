@@ -1,5 +1,11 @@
 {% extends 'tasks_board/base.html' %}
 
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'tasks_board/css/goal.css' %}">
+{% endblock %}
+
 {% block body %}
     {% include 'tasks_board/add_goal_task.html' with goal=goal %}
     {% include 'tasks_board/edit_goal.html' with goal=goal %}
@@ -9,11 +15,11 @@
         </div>
         <div class="mx-5"></div>
         <div class="dropdown dropleft ml-5">
-            <button class="btb task-menu dropdown-toggle" data-toggle="dropdown"></button>
-            <div class="dropdown-menu bg-secondary">
-                <a class="dropdown-item btn-outline-dark"
+            <button class="btb goal-menu dropdown-toggle" data-toggle="dropdown"></button>
+            <div class="dropdown-menu bg-secondary p-1 mt-1">
+                <a class="dropdown-item btn text-white" href=""
                    data-toggle="modal" data-target="#edit_goal">Edit</a>
-                <a class="dropdown-item"
+                <a class="dropdown-item btn text-white"
                    href="{% url 'board:delete_goal' goal.id %}">Delete</a>
             </div>
         </div>
