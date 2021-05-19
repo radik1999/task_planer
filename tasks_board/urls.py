@@ -4,7 +4,8 @@ from django.urls import path
 from tasks_board.views import (
     all_tasks, sign_up, sign_in, sign_out, current_day, upcoming,
     add_task, task, change_status, edit_task, delete_task, completed_tasks,
-    goal, add_goal, all_goals, edit_goal, delete_goal, back, profile
+    goal, add_goal, all_goals, edit_goal, delete_goal, back, profile,
+    anonymous_user_home
 )
 
 
@@ -14,7 +15,8 @@ urlpatterns = [
     path('signout', sign_out, name='sign_out'),
     path('signin/', sign_in, name='sign_in'),
     path('signup/', sign_up, name='sign_up'),
-    path('', current_day, name='today'),
+    path('', anonymous_user_home, name='anon_home'),
+    path('today/', current_day, name='today'),
     path('tasks/', all_tasks, name='tasks'),
     path('add_task/', add_task, name='add_task'),
     path('upcoming/', upcoming, name='upcoming'),

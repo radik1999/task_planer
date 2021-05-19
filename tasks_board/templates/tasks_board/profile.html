@@ -18,7 +18,23 @@
 
         <div class="border border-dark mt-5 text-center">
             <h1 class="ml-3 m-4 text-left">Statistic</h1>
-            {% for category in categories %}
+            {{ statistic.today_tasks.modal_html|safe|escape }}
+            <div class="row">
+                <div class="col">
+                    <a href="" data-toggle="modal" data-target="{{ statistic.today_tasks.modal_id }}">
+                        {{ statistic.today_tasks.name }}
+                    </a>
+                </div>
+                <div class="col">{{ statistic.today_tasks.done }}/{{ statistic.today_tasks.total_amount }}</div>
+                <div class="col">{{ statistic.today_tasks.percent }}%</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ statistic.all_tasks.name }}</div>
+                <div class="col">{{ statistic.all_tasks.done }}/{{ statistic.all_tasks.total_amount }}</div>
+                <div class="col">{{ statistic.all_tasks.percent }}%</div>
+            </div>
+            <h4 class="ml-3 m-4 text-left">Goals</h4>
+            {% for category in statistic.goals_tasks %}
                 <div class="row">
                     <div class="col">{{ category.name }}</div>
                     <div class="col">{{ category.done }}/{{ category.total_amount }}</div>
@@ -26,5 +42,6 @@
                 </div>
             {% endfor %}
         </div>
+
     </div>
 {% endblock %}

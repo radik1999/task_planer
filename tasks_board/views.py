@@ -12,7 +12,11 @@ from django.urls import reverse
 
 from .models import Goal, DailyTask
 from .business.business import save_task_form, change_task_status, save_goal_form
-from .business.satistic import Category
+from .business.satistic import Statistic
+
+
+def anonymous_user_home(request):
+    return render(request, 'tasks_board/not_auth_home.html')
 
 
 def all_tasks(request):
@@ -153,20 +157,4 @@ def back(request):
 
 
 def profile(request):
-    category_list = []
-    tasks = DailyTask.objects.filter(owner=request.user)
-    # print(filter(lambda task: task.status, tasks))
-    all_tasks = Category('All tasks', tasks)
-    category_list.append(all_tasks)
-
-    tasks = DailyTask.objects.filter(owner=request.user, day=date.today())
-    today_tasks = Category('Today tasks', tasks)
-    category_list.append(today_tasks)
-
-    goals = Goal.objects.all()
-
-    for goal in goals:
-        goal_tasks = Category(goal.title, goal.tasks)
-        category_list.append(goal_tasks)
-
-    return render(request, 'tasks_board/profile.html', {'categories': category_list})
+    return render(request, 'tasks_board/profile.html', {'statistic': Statistic(request)})
