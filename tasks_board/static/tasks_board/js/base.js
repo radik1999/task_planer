@@ -115,3 +115,8 @@ function add_active_class(element){
     }
     active_link.classList.add("active")
 }
+
+function add_modal(element){
+    let html_code = element.getAttribute('about')
+    $('.statistic').prepend(html_code)
+}

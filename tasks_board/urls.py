@@ -5,7 +5,7 @@ from tasks_board.views import (
     all_tasks, sign_up, sign_in, sign_out, current_day, upcoming,
     add_task, task, change_status, edit_task, delete_task, completed_tasks,
     goal, add_goal, all_goals, edit_goal, delete_goal, back, profile,
-    anonymous_user_home
+    anonymous_user_home, chart
 )
 
 
@@ -32,5 +32,6 @@ urlpatterns = [
     path('delete_goal/<int:goal_id>', delete_goal, name='delete_goal'),
     path('back/', back, name='back'),
     path('profile/', profile, name='profile'),
+    path('chart/<str:chart_name>', chart, name='chart'),
 
 ]

@@ -158,3 +158,7 @@ def back(request):
 
 def profile(request):
     return render(request, 'tasks_board/profile.html', {'statistic': Statistic(request)})
+
+
+def chart(request, chart_name):
+    return render(request, f'tasks_board/charts/{chart_name}.html')

@@ -1,10 +1,23 @@
-<div class="modal" id="{{ modal_id }}">
-    <div class="modal-dialog">
+
+<div class="modal fade" id="{{ modal_id }}">
+    <div class="modal-dialog modal-lg ">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h1>{{ name }} plot</h1>
+                <h4>{{ name }} chart</h4>
                 <button class="close" data-dismiss="modal">&times;</button>
             </div>
+
+            <div class="modal-body">
+                {% if no_tasks %}
+                    <h1>There are no tasks</h1>
+                {% else %}
+                    <img src="/{{ productivity }}" alt="productivity">
+                    <img src="/{{ priority_ratio }}" alt="priority_ratio">
+                {% endif %}
+
+            </div>
+
+
         </div>
     </div>
 </div>
