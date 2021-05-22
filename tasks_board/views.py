@@ -12,7 +12,7 @@ from django.urls import reverse
 
 from .models import Goal, DailyTask
 from .business.business import save_task_form, change_task_status, save_goal_form
-from .business.satistic import Statistic
+from .business.satistic import Statistic, GoalCategory
 
 
 def anonymous_user_home(request):
@@ -161,4 +161,9 @@ def profile(request):
 
 
 def chart(request, chart_name):
-    return render(request, f'tasks_board/charts/{chart_name}.html')
+    if chart_name == 'todaytasks':
+        return HttpResponse(Statistic(request).today_tasks.modal_html)
+    elif chart_name == 'alltasks':
+        return HttpResponse(Statistic(request).all_tasks.modal_html)
+    else:
+        return HttpResponse(GoalCategory(chart_name).modal_html)

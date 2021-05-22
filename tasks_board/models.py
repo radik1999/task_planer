@@ -14,10 +14,15 @@ class Priority(models.IntegerChoices):
 class Goal(models.Model):
     title = models.CharField(max_length=128)
     priority = models.IntegerField(default=Priority.LOW, choices=Priority.choices)
+    string_id = models.CharField(max_length=128)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.title
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.string_id = self.title.replace(" ", "").lower()
+        super().save(force_insert, force_update, using, update_fields)
 
     @property
     def get_priority(self):

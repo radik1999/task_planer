@@ -116,7 +116,29 @@ function add_active_class(element){
     active_link.classList.add("active")
 }
 
-function add_modal(element){
-    let html_code = element.getAttribute('about')
-    $('.statistic').prepend(html_code)
+// function add_modal(element){
+//     let html_code = element.getAttribute('about')
+//     $('.statistic').prepend(html_code)
+// }
+
+function add_modal(modal_id){
+    let mod = document.getElementById(modal_id);
+    if (!mod){
+        $.ajax({
+        type:"GET",
+        url: '/chart/' + modal_id,
+        success : function(response){
+            $('.statistic').prepend(response);
+            mod = $('#' + modal_id);
+            mod.modal('show');
+        }
+        })
+    }
+    else{
+        mod = $('#' + modal_id);
+        mod.modal('show');
+    }
+
+
 }
+

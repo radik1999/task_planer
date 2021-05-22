@@ -29,8 +29,12 @@ class Category:
         return int(round(self.done_amount / self.total_amount, 2) * 100)
 
     @property
+    def clean_name(self):
+        return self.name.replace(" ", "").lower()
+
+    @property
     def modal_id(self):
-        return f'#{self.name.replace(" ", "")}'
+        return f'#{self.clean_name}'
 
     @property
     def low_tasks(self):
@@ -54,7 +58,7 @@ class Category:
         slices = [self.done_amount, self.undone_amount]
 
         plt.pie(slices, labels=sections, colors=colors)
-        img_path = f'static/tasks_board/images/charts/{self.modal_id[1:]}_chart1.svg'
+        img_path = f'static/tasks_board/images/charts/{self.clean_name}_chart1.svg'
         plt.savefig('tasks_board/' + img_path)
         plt.close()
         return img_path
@@ -87,7 +91,7 @@ class Category:
 
         fig.tight_layout()
 
-        img_path = f'static/tasks_board/images/charts/{self.modal_id[1:]}_chart2.svg'
+        img_path = f'static/tasks_board/images/charts/{self.clean_name}_chart2.svg'
         plt.savefig('tasks_board/' + img_path)
         plt.close()
         return img_path
@@ -96,32 +100,53 @@ class Category:
     def modal_html(self):
         modal = Template(open('tasks_board/templates/tasks_board/statistic_plot_modal.html').read())
         if self.total_amount:
-            modal = modal.render({'modal_id': self.modal_id[1:],
+            modal = modal.render({'modal_id': self.clean_name,
                                   'name': self.name,
                                   'productivity': f'./{self.productivity_chart()}',
                                   'priority_ratio': f'./{self.priority_chart()}'
                                   })
         else:
-            modal = modal.render({'modal_id': self.modal_id[1:],
+            modal = modal.render({'modal_id': self.clean_name,
                                   'name': self.name,
                                   'no_tasks': True
                                   })
         return modal
 
 
+class GoalCategory(Category):
+    def __init__(self, goal_string_id):
+        goal = Goal.objects.get(string_id=goal_string_id)
+        self.goal_id = goal_string_id
+        name = goal.title
+        tasks = goal.tasks
+        super().__init__(name, tasks)
+
+    @property
+    def clean_name(self):
+        return self.goal_id
+
+
 class Statistic:
     def __init__(self, request):
         self.request = request
+        self.categories = {}
 
     @property
     def today_tasks(self):
         tasks = DailyTask.objects.filter(owner=self.request.user, day=date.today())
-        return Category('Today tasks', tasks)
+        today_tasks_category = Category('Today tasks', tasks)
+        self.categories[today_tasks_category.clean_name] = today_tasks_category
+        return today_tasks_category
 
     @property
     def all_tasks(self):
         tasks = DailyTask.objects.filter(owner=self.request.user)
-        return Category('All tasks', tasks)
+        all_tasks_category = Category('All tasks', tasks)
+        self.categories[all_tasks_category.clean_name] = all_tasks_category
+        return all_tasks_category
+
+    def goal_tasks(self, goal_string_id):
+        return GoalCategory(goal_string_id)
 
     @property
     def goals_tasks(self):
@@ -129,5 +154,6 @@ class Statistic:
         goals = Goal.objects.filter(owner=self.request.user)
         for goal in goals:
             goal_tasks = Category(goal.title, goal.tasks)
+            self.categories[goal_tasks.clean_name] = goal_tasks
             result.append(goal_tasks)
         return result
