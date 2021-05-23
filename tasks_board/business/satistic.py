@@ -49,15 +49,33 @@ class Category:
         return len(list(filter(lambda task: task.priority == 2, self.tasks)))
 
     def productivity_chart(self):
-        fig = plt.figure()
-        fig.patch.set_facecolor('#A9A9A9')
+        fig, ax = plt.subplots(figsize=(6, 4))
+
+        fig.patch.set_facecolor('#343a40')
 
         sections = ['Done', 'In progress']
-        colors = ['g', '#343a40']
-
+        colors = ['g', '#a9a9a9']
         slices = [self.done_amount, self.undone_amount]
 
-        plt.pie(slices, labels=sections, colors=colors)
+        labels = ['{:10}{:>3}{:>5}%'.format(sections[0], slices[0], int((slices[0]/self.total_amount)*100))]
+        labels += ['{:12}{:>3}{:>5}%'.format(sections[1], slices[1], int((slices[1]/self.total_amount)*100))]
+        print(labels[0])
+        print(labels[1])
+
+        wedges, texts = plt.pie(slices, colors=colors, shadow=True)
+        box = ax.get_position()
+        ax.set_position([box.x0*0.5, box.y0, box.width, box.height])
+
+        leg = ax.legend(wedges, labels,
+                  bbox_to_anchor=(1, 0, 0.5, 1), loc="center left")
+
+        hp = leg._legend_box.get_children()[1]
+        for vp in hp.get_children():
+            for row in vp.get_children():
+                row.set_width(125)  # need to adapt this manually
+                row.mode = "expand"
+                row.align = "left"
+
         img_path = f'static/tasks_board/images/charts/{self.clean_name}_chart1.svg'
         plt.savefig('tasks_board/' + img_path)
         plt.close()
@@ -66,24 +84,27 @@ class Category:
     def priority_chart(self):
         labels = ['Low', 'Normal', 'High']
 
-        men_means = self.low_tasks
+        low = self.low_tasks
         normal = self.normal_tasks
         high = self.high_tasks
 
         x = [0, 1, 2]
         width = 0.35
 
-        fig, ax = plt.subplots()
-        fig.patch.set_facecolor('#A9A9A9')
-        rects1 = ax.bar(0, men_means, width, label='Low', color='#808080')
-        rects2 = ax.bar(1, normal, width, label='Normal', color='#FFFF00')
-        rects3 = ax.bar(2, high, width, label='High', color='#FF0000')
+        fig, ax = plt.subplots(figsize=(6, 4))
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+        ax.set_facecolor('#343a40')
+        fig.patch.set_facecolor('#343a40')
 
-        ax.set_ylabel('Tasks number')
-        ax.set_title('Tasks by priority')
+        rects1 = ax.bar(0, low, width, color='#808080')
+        rects2 = ax.bar(1, normal, width, color='#FFFF00')
+        rects3 = ax.bar(2, high, width, color='#FF0000')
+
         ax.set_xticks(x)
+        ax.set_yticks([])
         ax.set_xticklabels(labels)
-        ax.legend()
 
         ax.bar_label(rects1, padding=2)
         ax.bar_label(rects2, padding=2)

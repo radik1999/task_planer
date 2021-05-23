@@ -3,6 +3,10 @@
 {% block button_back %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'tasks_board/css/profile.css' %}">
+{% endblock %}
+
 {% block body %}
     <div class="p-5">
         <div class="d-flex mb-5">
@@ -16,13 +20,14 @@
             </div>
         </div>
 
-        <div class="border border-dark mt-5 text-center statistic">
-            <h1 class="ml-3 m-4 text-left">Statistic</h1>
+        <div class="mt-5 text-center statistic">
+            <h1 class="ml-3 m-4 text-center">Statistic</h1>
+            <h3 class="ml-3 m-4 text-left">Tasks</h3>
 
-            <div class="row">
+            <div class="row text-center">
                 <div class="col">
                     <a onclick="add_modal('{{ statistic.today_tasks.clean_name }}')" class="btn text-primary">
-                        Today tasks
+                        <h4>Today tasks</h4>
                     </a>
                 </div>
                 <div class="col">{{ statistic.today_tasks.done_amount }}/{{ statistic.today_tasks.total_amount }}</div>
@@ -31,18 +36,18 @@
             <div class="row">
                 <div class="col">
                     <a onclick="add_modal('{{ statistic.all_tasks.clean_name }}')" class="btn text-primary">
-                        All tasks
+                        <h4>All tasks</h4>
                     </a>
                 </div>
                 <div class="col">{{ statistic.all_tasks.done_amount }}/{{ statistic.all_tasks.total_amount }}</div>
                 <div class="col">{{ statistic.all_tasks.percent }}%</div>
             </div>
-            <h4 class="ml-3 m-4 text-left">Goals</h4>
+            <h3 class="ml-3 m-4 text-left">Goals</h3>
             {% for category in statistic.goals_tasks %}
                 <div class="row">
                     <div class="col">
                         <a onclick="add_modal('{{ category.clean_name }}')" class="btn text-primary">
-                            {{ category.name }}
+                            <h4>{{ category.name }}</h4>
                         </a>
                     </div>
                     <div class="col">{{ category.done_amount }}/{{ category.total_amount }}</div>
