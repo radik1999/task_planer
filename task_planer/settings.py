@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-7ns^z1p4lvy3!lv^jsv^h75!wt21nz3!(zat=3vql#7n$=#xl4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['robinhood.pythonanywhere.com']
+ALLOWED_HOSTS = ['robinhood.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
