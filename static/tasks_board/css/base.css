@@ -1,0 +1,72 @@
+.top-nav{
+    box-shadow: 0 1px 2px black;
+}
+
+.navbar-brand{
+    color: #007bff !important;
+}
+
+.left-nav a{
+    height: 40px;
+    text-align: left;
+    margin-right: 2px;
+    margin-left: 20%;
+}
+
+.left-nav button{
+    width: 80%;
+    height: 40px;
+    text-align: left;
+    margin-right: 2px;
+    margin-left: 20%;
+    color: #007bff;
+}
+
+.left-nav{
+    position: fixed;
+    height: 100%;
+    width: 25%;
+    box-shadow: 1.5px 1px 3px black;
+}
+.left-nav ul{
+    height: 100%;
+    width: 100%;
+}
+
+.body{
+    margin-left: 25%;
+    margin-top: 55px;
+    font-family: Helvetica, serif;
+}
+
+body{
+    background: #a9a9a9;
+    font-family: Arial, serif;
+}
+
+.div_status{
+    cursor: pointer;
+}
+
+.profile{
+    background: url("../images/user-profile.svg") no-repeat;
+    background-size: 100% 100%;
+    border: 0;
+    width: 45px;
+    height: 45px;
+}
+
+.dropdown-toggle::before{
+    display: none !important;
+}
+.dropdown-toggle::after{
+    display: none !important;
+}
+
+.dropdown-toggle:focus{
+    outline: none;
+}
+
+.dropdown-menu a:hover{
+    background: #343a40;
+}
