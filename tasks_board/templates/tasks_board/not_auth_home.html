@@ -1,13 +1,19 @@
 {% extends 'tasks_board/base.html' %}
 
+{% load static %}
+
 {% block button_back %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'tasks_board/css/home.css' %}">
+{% endblock %}
+
 {% block body %}
-    <div>
-        <h1>Hi new user. Login please</h1>
-        <a onclick="{% include 'tasks_board/add_task.html' %}" class="data-toggle" data-target="#add_task">
-            Add task
-        </a>
+    <div class="home p-5 text-center">
+        <h1 class="text-warning">Start organize your life with Planer</h1>
+            <button class="btn btn-outline-warning mt-3" data-toggle="modal" data-target="#login_modal">
+                    Get Started
+            </button>
     </div>
 {% endblock %}

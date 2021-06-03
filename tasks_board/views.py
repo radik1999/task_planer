@@ -19,6 +19,7 @@ def anonymous_user_home(request):
     return render(request, 'tasks_board/not_auth_home.html')
 
 
+@login_required
 def all_tasks(request):
     request.session['return_page'] = 'board:tasks'
     tasks = DailyTask.objects.filter(main_task=None, status=False, owner=request.user)
@@ -28,6 +29,7 @@ def all_tasks(request):
     return render(request, 'tasks_board/tasks.html', {'tasks': tasks, 'goals': goals})
 
 
+@login_required
 def current_day(request):
     request.session['return_page'] = 'board:today'
     tasks = DailyTask.objects.filter(day=date.today(), main_task=None, status=False, owner=request.user)
@@ -36,6 +38,7 @@ def current_day(request):
     return render(request, 'tasks_board/today.html', {'tasks': tasks, 'goals': goals})
 
 
+@login_required
 def upcoming(request):
     return render(request, 'tasks_board/upcoming.html')
 
@@ -73,6 +76,7 @@ def sign_in(request):
             return HttpResponse(json.dumps({'message': "Denied"}), content_type='application/json')
 
 
+@login_required
 def task(request, task_id):
     task = DailyTask.objects.get(pk=task_id)
     goals = Goal.objects.all()
@@ -110,6 +114,7 @@ def delete_task(request, task_id):
     return redirect('board:tasks')
 
 
+@login_required
 def completed_tasks(request):
     request.session['return_page'] = 'board:completed_tasks'
     tasks = DailyTask.objects.filter(status=True, main_task=None, owner=request.user)
@@ -118,6 +123,7 @@ def completed_tasks(request):
     return render(request, 'tasks_board/completed_tasks.html', {'tasks': tasks, 'goals': goals})
 
 
+@login_required
 def goal(request, goal_id):
     if request.method == 'GET':
         request.session['return_page'] = reverse('board:goal', kwargs={'goal_id': goal_id})
@@ -126,6 +132,7 @@ def goal(request, goal_id):
         return render(request, 'tasks_board/goal.html', {'goal': goal, 'goals': goals})
 
 
+@login_required
 def all_goals(request):
     if request.method == 'GET':
         request.session['return_page'] = 'board:goals'
@@ -156,6 +163,7 @@ def back(request):
     return redirect(request.session['return_page'])
 
 
+@login_required
 def profile(request):
     return render(request, 'tasks_board/profile.html', {'statistic': Statistic(request)})
 

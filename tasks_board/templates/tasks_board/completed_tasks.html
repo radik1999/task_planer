@@ -2,13 +2,15 @@
 {#{% block competed_tasks_link_class %}active{% endblock %}#}
 
 {% block body %}
-    <div class="d-flex justify-content-around">
-        <h2>Completed tasks</h2>
-    </div>
-    <div class="container tasks mt-3 px-5">
-        <hr>
-        {% for task in tasks %}
-            {% include 'tasks_board/task_column.html' with task=task %}
-        {% endfor %}
+    <div class="p-5">
+        <div class="d-flex justify-content-around">
+            <h2>Completed tasks</h2>
+        </div>
+        <div class="container tasks mt-3 px-5">
+            <hr>
+            {% for task in tasks %}
+                {% include 'tasks_board/task_column.html' with task=task %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
